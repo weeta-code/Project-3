@@ -3,21 +3,29 @@
 # Spire IDs : 34569497
 order1 = ('manan', 'holyoke', '', 'chicken', 'brown', 'pinto', True, 'queso blanco', 'cheese', 'fajita veggies', 'sour cream', 'guacamole')
 
-def get_protein(choice: str) -> float:
-    if choice == 'chicken' or choice == 'veggies':
-        return 2.5
-    elif choice == 'steak' or choice == 'barbacoa':
-        return 3.5
-    elif choice == 'carnitas':
-        return 3.0
-    else:
-        return 0.0
+def get_protein(choice: tuple) -> tuple:
+    price = 0.0
+    for item in choice:
+        if item == 'chicken' or item == 'veggies':
+            price += 2.5
+        elif item == 'steak' or item == 'barbacoa':
+            price += 3.5
+        elif item == 'carnitas':
+            price += 3.0
+        elif item in ('', ' '):
+            price += 0
+    return price
 # print(get_protein(order1))
 def get_rice(choice: tuple) -> tuple:
-    if choice == 'white' or choice == 'brown':
-        return 2.5
-    else:
-        return 0.0
+    price = 0
+    for item in choice:
+        if item == 'white':
+            price += 2.5
+        elif item == 'brown':
+            price += 3.5
+        elif item == '' or item == ' ':
+            price += 0
+    return price
 # print(get_rice(order1))
 def get_beans(choice: tuple) -> tuple:
     price = 0
@@ -29,10 +37,13 @@ def get_beans(choice: tuple) -> tuple:
     return price
 # print(get_beans(order1))
 def get_burrito(choice: bool) -> float:
-    if choice:
-        return 2
-    else:
-        return 0
+    price = 0
+    for item in choice:
+        if item == True:
+            price += 2
+        elif item == False:
+            price += 0
+    return price
 # print(get_burrito(order1))
 def get_toppings(choice: tuple) -> tuple:
     toppings_prices = {'guacamole' : 2.75, 'tomato salsa': 2.5, 'chili corn salsa': 1.75, 'tomatillo green chili salsa': 2.0, 'sour cream': 2.5, 'fajita veggies': 2.5, 'cheese': 2.0, 'queso blanco': 2.75, '': 0, ' ': 0}
@@ -102,7 +113,7 @@ def generate_invoice(choice):
     print(f"Protein: {protein} - ${pprice}")
     print(f"Rice: {rice} rice - ${rprice}")
     print(f"Beans: {beans} beans - ${bprice}")
-    print(f"Burrito: {'Yes' if burrito else 'No'} - ${burprice}")
+    print(f"Burrito: {True if burrito else False} - ${burprice}")
     print(f"Toppings: {', '.join(toppings)} - ${topprice}")
     print(f"Subtotal: ${subtot}")
     print(f"Discount Code: {discount}")
